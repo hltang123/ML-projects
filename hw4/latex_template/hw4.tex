@@ -1,0 +1,1525 @@
+\documentclass[11pt,addpoints,answers]{exam}
+
+%-----------------------------------------------------------------------------
+% PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%-----------------------------------------------------------------------------
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amsfonts}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{url}
+\usepackage{xfrac}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{paralist}
+\usepackage{epstopdf}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{environ}
+\usepackage{times}
+\usepackage{textcomp}
+\usepackage{caption}
+\usepackage{parskip} % For NIPS style paragraphs.
+\usepackage[compact]{titlesec} % Less whitespace around titles
+\usepackage[inline]{enumitem} % For inline enumerate* and itemize*
+\usepackage{datetime}
+\usepackage{comment}
+% \usepackage{minted}
+\usepackage{lastpage}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage[final]{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes,decorations}
+\usepackage{framed}
+\usepackage{booktabs}
+\usepackage{cprotect}
+\usepackage{verbatim}
+\usepackage{verbatimbox}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usepackage{mathtools} % For drcases
+\usepackage{cancel}
+\usepackage[many]{tcolorbox}
+\usepackage{soul}
+\usepackage[bottom]{footmisc}
+\usepackage{bm}
+\usepackage{wasysym}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{positioning, arrows, automata, calc}
+\usepackage{transparent}
+
+\newtcolorbox[]{your_solution}[1][]{
+    % breakable,
+    enhanced,
+    nobeforeafter,
+    colback=white,
+    title=Your Answer,
+    sidebyside align=top,
+    box align=top,
+    #1
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting for \CorrectChoice of "exam" %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\CorrectChoiceEmphasis{}
+\checkedchar{\blackcircle}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rotated Column Headers                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{adjustbox}
+\usepackage{array}
+
+%https://tex.stackexchange.com/questions/32683/rotated-column-titles-in-tabular
+
+\newcolumntype{R}[2]{%
+    >{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
+    l%
+    <{\egroup}%
+}
+\newcommand*\rot{\multicolumn{1}{R{45}{1em}}}% no optional argument here, please!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom commands                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\newcommand{\adj}[1]{\frac{d J}{d #1}}
+\newcommand{\chain}[2]{\adj{#2} = \adj{#1}\frac{d #1}{d #2}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\blackcircle}{\tikz\draw[black,fill=black] (0,0) circle (1ex);}
+\renewcommand{\circle}{\tikz\draw[black] (0,0) circle (1ex);}
+
+\newcommand{\emptysquare}{{\LARGE $\square$}\ \ }
+\newcommand{\filledsquare}{{\LARGE $\blacksquare$}\ \ }
+\newcommand{\emptycircle}{{\LARGE $\fullmoon$}\ \ }
+\newcommand{\filledcircle}{{\LARGE $\newmoon$}\ \ }
+
+\newcommand{\ntset}{test}
+
+% mathcal
+\newcommand{\Ac}{\mathcal{A}}
+\newcommand{\Bc}{\mathcal{B}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\Dc}{\mathcal{D}}
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\Fc}{\mathcal{F}}
+\newcommand{\Gc}{\mathcal{G}}
+\newcommand{\Hc}{\mathcal{H}}
+\newcommand{\Ic}{\mathcal{I}}
+\newcommand{\Jc}{\mathcal{J}}
+\newcommand{\Kc}{\mathcal{K}}
+\newcommand{\Lc}{\mathcal{L}}
+\newcommand{\Mc}{\mathcal{M}}
+\newcommand{\Nc}{\mathcal{N}}
+\newcommand{\Oc}{\mathcal{O}}
+\newcommand{\Pc}{\mathcal{P}}
+\newcommand{\Qc}{\mathcal{Q}}
+\newcommand{\Rc}{\mathcal{R}}
+\newcommand{\Sc}{\mathcal{S}}
+\newcommand{\Tc}{\mathcal{T}}
+\newcommand{\Uc}{\mathcal{U}}
+\newcommand{\Vc}{\mathcal{V}}
+\newcommand{\Wc}{\mathcal{W}}
+\newcommand{\Xc}{\mathcal{X}}
+\newcommand{\Yc}{\mathcal{Y}}
+\newcommand{\Zc}{\mathcal{Z}}
+
+% mathbb
+\newcommand{\Ab}{\mathbb{A}}
+\newcommand{\Bb}{\mathbb{B}}
+\newcommand{\Cb}{\mathbb{C}}
+\newcommand{\Db}{\mathbb{D}}
+\newcommand{\Eb}{\mathbb{E}}
+\newcommand{\Fb}{\mathbb{F}}
+\newcommand{\Gb}{\mathbb{G}}
+\newcommand{\Hb}{\mathbb{H}}
+\newcommand{\Ib}{\mathbb{I}}
+\newcommand{\Jb}{\mathbb{J}}
+\newcommand{\Kb}{\mathbb{K}}
+\newcommand{\Lb}{\mathbb{L}}
+\newcommand{\Mb}{\mathbb{M}}
+\newcommand{\Nb}{\mathbb{N}}
+\newcommand{\Ob}{\mathbb{O}}
+\newcommand{\Pb}{\mathbb{P}}
+\newcommand{\Qb}{\mathbb{Q}}
+\newcommand{\Rb}{\mathbb{R}}
+\newcommand{\Sb}{\mathbb{S}}
+\newcommand{\Tb}{\mathbb{T}}
+\newcommand{\Ub}{\mathbb{U}}
+\newcommand{\Vb}{\mathbb{V}}
+\newcommand{\Wb}{\mathbb{W}}
+\newcommand{\Xb}{\mathbb{X}}
+\newcommand{\Yb}{\mathbb{Y}}
+\newcommand{\Zb}{\mathbb{Z}}
+
+% mathbf lowercase
+\newcommand{\av}{\mathbf{a}}
+\newcommand{\bv}{\mathbf{b}}
+\newcommand{\cv}{\mathbf{c}}
+\newcommand{\dv}{\mathbf{d}}
+\newcommand{\ev}{\mathbf{e}}
+\newcommand{\fv}{\mathbf{f}}
+\newcommand{\gv}{\mathbf{g}}
+\newcommand{\hv}{\mathbf{h}}
+\newcommand{\iv}{\mathbf{i}}
+\newcommand{\jv}{\mathbf{j}}
+\newcommand{\kv}{\mathbf{k}}
+\newcommand{\lv}{\mathbf{l}}
+\newcommand{\mv}{\mathbf{m}}
+\newcommand{\nv}{\mathbf{n}}
+\newcommand{\ov}{\mathbf{o}}
+\newcommand{\pv}{\mathbf{p}}
+\newcommand{\qv}{\mathbf{q}}
+\newcommand{\rv}{\mathbf{r}}
+\newcommand{\sv}{\mathbf{s}}
+\newcommand{\tv}{\mathbf{t}}
+\newcommand{\uv}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\wv}{\mathbf{w}}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\yv}{\mathbf{y}}
+\newcommand{\zv}{\mathbf{z}}
+
+% mathbf uppercase
+\newcommand{\Av}{\mathbf{A}}
+\newcommand{\Bv}{\mathbf{B}}
+\newcommand{\Cv}{\mathbf{C}}
+\newcommand{\Dv}{\mathbf{D}}
+\newcommand{\Ev}{\mathbf{E}}
+\newcommand{\Fv}{\mathbf{F}}
+\newcommand{\Gv}{\mathbf{G}}
+\newcommand{\Hv}{\mathbf{H}}
+\newcommand{\Iv}{\mathbf{I}}
+\newcommand{\Jv}{\mathbf{J}}
+\newcommand{\Kv}{\mathbf{K}}
+\newcommand{\Lv}{\mathbf{L}}
+\newcommand{\Mv}{\mathbf{M}}
+\newcommand{\Nv}{\mathbf{N}}
+\newcommand{\Ov}{\mathbf{O}}
+\newcommand{\Pv}{\mathbf{P}}
+\newcommand{\Qv}{\mathbf{Q}}
+\newcommand{\Rv}{\mathbf{R}}
+\newcommand{\Sv}{\mathbf{S}}
+\newcommand{\Tv}{\mathbf{T}}
+\newcommand{\Uv}{\mathbf{U}}
+\newcommand{\Vv}{\mathbf{V}}
+\newcommand{\Wv}{\mathbf{W}}
+\newcommand{\Xv}{\mathbf{X}}
+\newcommand{\Yv}{\mathbf{Y}}
+\newcommand{\Zv}{\mathbf{Z}}
+
+% bold greek lowercase
+\newcommand{\alphav     }{\boldsymbol \alpha     }
+\newcommand{\betav      }{\boldsymbol \beta      }
+\newcommand{\gammav     }{\boldsymbol \gamma     }
+\newcommand{\deltav     }{\boldsymbol \delta     }
+\newcommand{\epsilonv   }{\boldsymbol \epsilon   }
+\newcommand{\varepsilonv}{\boldsymbol \varepsilon}
+\newcommand{\zetav      }{\boldsymbol \zeta      }
+\newcommand{\etav       }{\boldsymbol \eta       }
+\newcommand{\thetav     }{\boldsymbol \theta     }
+\newcommand{\varthetav  }{\boldsymbol \vartheta  }
+\newcommand{\iotav      }{\boldsymbol \iota      }
+\newcommand{\kappav     }{\boldsymbol \kappa     }
+\newcommand{\varkappav  }{\boldsymbol \varkappa  }
+\newcommand{\lambdav    }{\boldsymbol \lambda    }
+\newcommand{\muv        }{\boldsymbol \mu        }
+\newcommand{\nuv        }{\boldsymbol \nu        }
+\newcommand{\xiv        }{\boldsymbol \xi        }
+\newcommand{\omicronv   }{\boldsymbol \omicron   }
+\newcommand{\piv        }{\boldsymbol \pi        }
+\newcommand{\varpiv     }{\boldsymbol \varpi     }
+\newcommand{\rhov       }{\boldsymbol \rho       }
+\newcommand{\varrhov    }{\boldsymbol \varrho    }
+\newcommand{\sigmav     }{\boldsymbol \sigma     }
+\newcommand{\varsigmav  }{\boldsymbol \varsigma  }
+\newcommand{\tauv       }{\boldsymbol \tau       }
+\newcommand{\upsilonv   }{\boldsymbol \upsilon   }
+\newcommand{\phiv       }{\boldsymbol \phi       }
+\newcommand{\varphiv    }{\boldsymbol \varphi    }
+\newcommand{\chiv       }{\boldsymbol \chi       }
+\newcommand{\psiv       }{\boldsymbol \psi       }
+\newcommand{\omegav     }{\boldsymbol \omega     }
+
+% bold greek uppercase
+\newcommand{\Gammav     }{\boldsymbol \Gamma     }
+\newcommand{\Deltav     }{\boldsymbol \Delta     }
+\newcommand{\Thetav     }{\boldsymbol \Theta     }
+\newcommand{\Lambdav    }{\boldsymbol \Lambda    }
+\newcommand{\Xiv        }{\boldsymbol \Xi        }
+\newcommand{\Piv        }{\boldsymbol \Pi        }
+\newcommand{\Sigmav     }{\boldsymbol \Sigma     }
+\newcommand{\Upsilonv   }{\boldsymbol \Upsilon   }
+\newcommand{\Phiv       }{\boldsymbol \Phi       }
+\newcommand{\Psiv       }{\boldsymbol \Psi       }
+\newcommand{\Omegav     }{\boldsymbol \Omega     }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code highlighting with listings         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+\definecolor{light-gray}{gray}{0.95}
+
+\newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinelanguage{Shell}{
+  keywords={tar, cd, make},
+  %keywordstyle=\color{bluekeywords}\bfseries,
+  alsoletter={+},
+  ndkeywords={python3, python, py, javac, java, gcc, c, g++, cpp, .txt, octave, m, .tar},
+  %ndkeywordstyle=\color{bluekeywords}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  %stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+  backgroundcolor = \color{light-gray}
+}
+
+\lstset{columns=fixed, basicstyle=\ttfamily,
+    backgroundcolor=\color{light-gray},xleftmargin=0.5cm,frame=tlbr,framesep=4pt,framerule=0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom box for highlights               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define box and box title style
+\tikzstyle{mybox} = [fill=blue!10, very thick,
+    rectangle, rounded corners, inner sep=1em, inner ysep=1em]
+
+\NewEnviron{notebox}{
+\resizebox{1.02\textwidth}{!}{%
+\begin{tikzpicture}
+\node [mybox] (box){
+    \begin{minipage}{\textwidth}
+        \BODY
+    \end{minipage}
+};
+\end{tikzpicture}
+}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands showing / hiding solutions     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% To HIDE SOLUTIONS (to post at the website for students), set this value to 0:
+\def\issoln{0}
+% Some commands to allow solutions to be embedded in the assignment file.
+\ifcsname issoln\endcsname \else \def\issoln{1} \fi
+% Default to an empty solutions environ.
+\NewEnviron{soln}{}{}
+\if\issoln 1
+% Otherwise, include solutions as below.
+\RenewEnviron{soln}{
+    \leavevmode\color{red}\ignorespaces
+    % \textbf{Solution} \BODY
+    \BODY
+}{}
+\fi
+
+%% qauthor environment:
+% Default to an empty qauthor environ.
+\NewEnviron{qauthor}{}{}
+%% To HIDE TAGS set this value to 0:
+\def\showtags{0}
+%%%%%%%%%%%%%%%%
+\ifcsname showtags\endcsname \else \def\showtags{1} \fi
+% Default to an empty tags environ.
+\NewEnviron{tags}{}{}
+\if\showtags 1
+% Otherwise, include solutions as below.
+\RenewEnviron{tags}{
+    \fbox{
+    \leavevmode\color{blue}\ignorespaces
+    \textbf{TAGS:} \texttt{\url{\BODY}}
+    }
+    \vspace{-.5em}
+}{}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands for customizing the assignment %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\courseNum}{10-301 / 10-601}
+\newcommand{\courseName}{Introduction to Machine Learning}
+\newcommand{\courseSem}{Spring 2022}
+\newcommand{\courseUrl}{\url{http://mlcourse.org}}
+\newcommand{\hwNum}{Homework 4}
+\newcommand{\hwTopic}{Logistic Regression}
+\newcommand{\hwName}{\hwNum: \hwTopic}
+\newcommand{\dueDate}{Sunday, February 27th}
+
+\lhead{\hwName}
+\rhead{\courseNum}
+\cfoot{\thepage{} of \numpages{}}
+
+
+\title{\textsc{\hwNum}: \textsc{\hwTopic}
+%\thanks{Compiled on \today{} at \currenttime{}}
+} % Title
+
+
+\author{\courseName\\
+\url{http://www.cs.cmu.edu/~mgormley/courses/10601/} \\
+OUT: Friday, February 18th \\
+DUE: \dueDate{} \\
+TAs: Sana, Hayden, Prasoon, Tori, Chu
+}
+
+\newcommand{\homeworktype}{\string written/programming}
+
+\date{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Useful commands for typesetting the questions %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand \expect {\mathbb{E}}
+\newcommand \mle [1]{{\hat #1}^{\rm MLE}}
+\newcommand \map [1]{{\hat #1}^{\rm MAP}}
+\newcommand \argmax {\operatorname*{argmax}}
+\newcommand \argmin {\operatorname*{argmin}}
+\newcommand \code [1]{{\tt #1}}
+\newcommand \datacount [1]{\#\{#1\}}
+\newcommand \ind [1]{\mathbb{I}\{#1\}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document configuration %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't display a date in the title and remove the white space
+\predate{}
+\postdate{}
+\date{}
+
+% Don't display an author and remove the white space
+%\preauthor{}
+%\postauthor{}
+
+% Solo and group questions
+\newcommand{\solo}{\textbf{[SOLO]} }
+\newcommand{\group}{\textbf{[GROUP]} }
+
+% Question type commands
+\newcommand{\sall}{\textbf{Select all that apply: }}
+\newcommand{\sone}{\textbf{Select one: }}
+\newcommand{\tf}{\textbf{True or False: }}
+
+% AdaBoost commands
+\newcommand{\trainerr}[1]{\hat{\epsilon}_S \left(#1\right)}
+\newcommand{\generr}[1]{\epsilon \left(#1\right)}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\margin}{\text{margin}}
+\newcommand{\sign}{\text{sign}}
+\newcommand{\PrS}{\hat{\Pr_{(x_i, y_i) \sim S}}}
+\newcommand{\PrSinline}{\hat{\Pr}_{(x_i, y_i) \sim S}}  % inline PrS
+
+% Abhi messing around with examdoc
+\qformat{\textbf{{\Large \thequestion \; \; \thequestiontitle \ (\totalpoints \ points)}} \hfill}
+\renewcommand{\thequestion}{\arabic{question}}
+\renewcommand{\questionlabel}{\thequestion.}
+
+\renewcommand{\thepartno}{\arabic{partno}}
+\renewcommand{\partlabel}{\thepartno.}
+\renewcommand{\partshook}{\setlength{\leftmargin}{0pt}}
+
+\renewcommand{\thesubpart}{\alph{subpart}}
+\renewcommand{\subpartlabel}{(\thesubpart)}
+
+\renewcommand{\thesubsubpart}{\roman{subsubpart}}
+\renewcommand{\subsubpartlabel}{\thesubsubpart.}
+
+% copied from stack overflow, as all good things are
+\newcommand\invisiblesection[1]{%
+  \refstepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+  \sectionmark{#1}}
+
+% quite possibly the worst workaround i have made for this class
+\newcommand{\sectionquestion}[1]{
+\titledquestion{#1}
+\invisiblesection{#1}
+~\vspace{-1em}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New Environment for Pseudocode          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Python style for highlighting
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+morekeywords={self},              % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false,
+xleftmargin=0pt
+}}
+
+
+% Python environment
+\lstnewenvironment{your_code_solution}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+
+%%%%%%%%%%%%%%%%%%
+% Begin Document %
+%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+
+
+\begin{notebox}
+\paragraph{Summary} In this assignment, you will build a sentiment polarity analyzer, which will be capable of analyzing the overall sentiment polarity (positive or negative) . In the Written component, you will warm up by deriving stochastic gradient descent updates for logistic regression. Then in the Programming component, you will implement a logistic regression model as the core of your natural language processing system.
+\end{notebox}
+\newcommand \maxsubs {10 }
+\section*{START HERE: Instructions}
+\begin{itemize}
+
+\item \textbf{Collaboration Policy}: Please read the collaboration policy here: \url{http://www.cs.cmu.edu/~mgormley/courses/10601/syllabus.html}
+
+\item\textbf{Late Submission Policy:} See the late submission policy here: \url{http://www.cs.cmu.edu/~mgormley/courses/10601/syllabus.html}
+
+\item\textbf{Submitting your work:} You will use Gradescope to submit
+  answers to all questions\ifthenelse{\equal{\homeworktype}{\string written}}{}{ and code}. Please
+  follow instructions at the end of this PDF to correctly submit all your code to Gradescope.
+
+  \begin{itemize}
+    
+ % COMMENT IF NOT USING CANVAS
+\begin{comment}
+  \item \textbf{Canvas:} Canvas (\url{https://canvas.cmu.edu}) will be
+    used for quiz-style problems (e.g. multiple choice, true / false,
+    numerical answers). Grading is done automatically.
+    %
+    You may only \textbf{submit once} on canvas, so be sure of your
+    answers before you submit. However, canvas allows you to work on
+    your answers and then close out of the page and it will save your
+    progress.  You will not be granted additional submissions, so
+    please be confident of your solutions when you are submitting your
+    assignment.
+    %
+    {\color{red} The above is true for future assignments, but this one
+    allows {\bf unlimited submissions}.}
+\end{comment}
+    
+  % COMMENT IF NOT USING GRADESCOPE
+   \item \textbf{Written:} For written problems such as short answer, multiple choice, derivations, proofs, or plots, please use the provided template. Submissions can be handwritten onto the template, but should be labeled and clearly legible. If your writing is not legible, you will not be awarded marks. Alternatively, submissions can be written in LaTeX. Each derivation/proof should be completed in the boxes provided. You are responsible for ensuring that your submission contains exactly the same number of pages and the same alignment as our PDF template. If you do not follow the template, your assignment may not be graded correctly by our AI assisted grader.
+
+  %   COMMENT IF NOT USING GRADESCOPE AUTOGRADER
+  \ifthenelse{\equal{\homeworktype}{\string written}}{}{
+\item \textbf{Programming:} You will submit your code for programming questions on the homework to Gradescope (\url{https://gradescope.com}). After uploading your code, our grading scripts will autograde your assignment by running your program on a virtual machine (VM). When you are developing, check that the version number of the programming language environment (e.g. Python 3.9.6) and versions of permitted libraries (e.g.  \texttt{numpy} 1.21.2 and \texttt{scipy} 1.7.1) match those used on Gradescope. You have \maxsubs free Gradescope programming submissions. After \maxsubs submissions, you will begin to lose points from your total programming score. We recommend debugging your implementation on your local machine (or the Linux servers) and making sure your code is running correctly first before submitting your code to Gradescope.}
+
+  \end{itemize}
+  
+\ifthenelse{\equal{\homeworktype}{\string written}}{}{\item\textbf{Materials:} The data that you will need in order to complete this assignment is posted along with the writeup and template on the course website.}
+
+\end{itemize}
+
+
+%\ifthenelse{\equal{\homeworktype}{\string written}}{}{\begin{notebox}
+%\paragraph{Linear Algebra Libraries} When implementing machine learning algorithms, it is often convenient to have a linear algebra library at your disposal. In this assignment, Java users may use EJML\footnote{\url{https://ejml.org}} or ND4J\footnote{\url{https://javadoc.io/doc/org.nd4j/nd4j-api/latest/index.html}} and C++ users may use Eigen\footnote{\url{http://eigen.tuxfamily.org/}}. Details below. 
+%
+%(As usual, Python users have NumPy.)
+%
+%\begin{description}
+%\item[EJML for Java] EJML is a pure Java linear algebra package with three interfaces. We strongly recommend using the SimpleMatrix interface. The autograder will use EJML version 0.41. When compiling and running your code, we will add the additional command line argument {\footnotesize{\lstinline{-cp "linalg_lib/ejml-v0.41-libs/*:linalg_lib/nd4j-v1.0.0-M1.1-libs/*:./"}}}
+%to ensure that all the EJML jars are on the classpath as well as your code. 
+
+%\item[ND4J for Java] ND4J is a library for multidimensional tensors with an interface akin to Python's NumPy. The autograder will use ND4J version 1.0.0-M1.1. When compiling and running your code, we will add the additional command line argument {\footnotesize{\lstinline{-cp "linalg_lib/ejml-v0.41-libs/*:linalg_lib/nd4j-v1.0.0-M1.1-libs/*:./"}}} to ensure that all the ND4J jars are on the classpath as well as your code. 
+
+%\item[Eigen for C++] Eigen is a header-only library, so there is no linking to worry about---just \lstinline{#include} whatever components you need. The autograder will use Eigen version 3.4.0. The command line arguments above demonstrate how we will call you code. When compiling your code we will include, the argument \lstinline{-I./linalg_lib} in order to include the \lstinline{linalg_lib/Eigen} subdirectory, which contains all the headers.
+
+%\end{description} 
+%We have included the correct versions of EJML/ND4J/Eigen in the \lstinline{linalg_lib.zip} posted on the Coursework page of the course website for your convenience. It contains the same \lstinline{linalg_lib/} directory that we will include in the current working directory when running your tests. Do {\bf not} include EJML, ND4J, or Eigen in your homework submission; the autograder will ensure that they are in place. 
+%\end{notebox}}\clearpage
+
+\section*{Instructions for Specific Problem Types}
+
+For ``Select One" questions, please fill in the appropriate bubble completely:
+
+\begin{quote}
+\textbf{Select One:} Who taught this course?
+    \begin{checkboxes}
+     \CorrectChoice Matt Gormley
+     \choice Marie Curie
+     \choice Noam Chomsky
+    \end{checkboxes}
+\end{quote}
+
+If you need to change your answer, you may cross out the previous answer and bubble in the new answer:
+
+\begin{quote}
+\textbf{Select One:} Who taught this course?
+    {
+    \begin{checkboxes}
+     \CorrectChoice Matt Gormley
+     \choice Marie Curie \checkboxchar{\xcancel{\blackcircle}{}}
+     \choice Noam Chomsky
+    \end{checkboxes}
+    }
+\end{quote}
+
+For ``Select all that apply" questions, please fill in all appropriate squares completely:
+
+\begin{quote}
+\textbf{Select all that apply:} Which are scientists?
+    {%
+    \checkboxchar{$\Box$} \checkedchar{$\blacksquare$} % change checkbox style locally
+    \begin{checkboxes}
+    \CorrectChoice Stephen Hawking 
+    \CorrectChoice Albert Einstein
+    \CorrectChoice Isaac Newton
+    \choice I don't know
+    \end{checkboxes}
+    }
+\end{quote}
+
+Again, if you need to change your answer, you may cross out the previous answer(s) and bubble in the new answer(s):
+
+\begin{quote}
+\textbf{Select all that apply:} Which are scientists?
+    {%
+    \checkboxchar{\xcancel{$\blacksquare$}} \checkedchar{$\blacksquare$} % change checkbox style locally
+    \begin{checkboxes}
+    \CorrectChoice Stephen Hawking 
+    \CorrectChoice Albert Einstein
+    \CorrectChoice Isaac Newton
+    \choice I don't know
+    \end{checkboxes}
+    }
+\end{quote}
+
+For questions where you must fill in a blank, please make sure your final answer is fully included in the given space. You may cross out answers or parts of answers, but the final answer must still be within the given space.
+
+\begin{quote}
+\textbf{Fill in the blank:} What is the course number?
+
+\begin{tcolorbox}[fit,height=1cm, width=4cm, blank, borderline={1pt}{-2pt},nobeforeafter]
+    \begin{center}\huge10-601\end{center}
+    \end{tcolorbox}\hspace{2cm}
+    \begin{tcolorbox}[fit,height=1cm, width=4cm, blank, borderline={1pt}{-2pt},nobeforeafter]
+    \begin{center}\huge10-\xcancel{6}301\end{center}
+    \end{tcolorbox}
+\end{quote}
+
+\clearpage
+
+\clearpage
+
+{\LARGE \bf Written Questions (\numpoints \ points)}
+
+\begin{questions}
+\sectionquestion{\LaTeX{} Bonus Point}
+\label{sec:latex}
+
+\begin{parts}
+    \part[1] \sone Did you use \LaTeX{} for the entire written portion of this homework?
+    
+    \begin{checkboxes}
+        % YOUR ANSWER
+        % Change \choice to \CorrectChoice for the appropriate selection/selections 
+        \choice Yes
+        \choice No
+    \end{checkboxes}
+\end{parts}
+
+\vspace*{1.2cm}
+
+\sectionquestion{Linear Regression} 
+\begin{parts}
+\part We would like to fit a linear regression model to the dataset 
+$$
+\Dc = \left\{\left(\xv^{(1)},y^{(1)}\right), \left(\xv^{(2)},y^{(2)}\right),\cdots, \left(\xv^{(N)},y^{(N)}\right)\right\}
+$$ with $\xv^{(i)} \in \mathbb{R}^M$ by minimizing the ordinary least square (OLS) objective function:
+$$
+J(\wv) = \frac{1}{2}\sum_{i=1}^N\left(y^{(i)} - \sum_{j=1}^M w_j x_j^{(i)}\right)^2.
+$$
+\begin{subparts}
+    \subpart[2] \sone
+    Specifically, we solve for each coefficient $w_k$ ($1\leq k\leq M$) by deriving an expression of $w_k$ from the critical point $\frac{\partial J(\wv)}{\partial w_k} = 0$. What is the expression for each $w_k$ in terms of the dataset 
+    $(\xv^{(1)},y^{(1)})$, $\cdots$, $(\xv^{(N)},y^{(N)})$ and $w_1,\cdots,w_{k-1},w_{k+1},\cdots,w_M$?
+
+    \begin{checkboxes}
+        % YOUR ANSWER
+        % Change \choice to \CorrectChoice for the appropriate selection/selections 
+        \choice $w_k = \frac{\sum_{i=1}^N x_k^{(i)}(y^{(i)}-\sum_{j=1,j\neq k}^M w_j x_j^{(i)})}{\sum_{i=1}^N (x_k^{(i)})^2}$
+        \choice $w_k = \frac{\sum_{i=1}^N x_k^{(i)}(y^{(i)}-\sum_{j=1,j\neq k}^M w_j x_j^{(i)})}{\sum_{i=1}^N (y^{(i)})^2}$
+        \choice $w_k = \frac{\sum_{i=1}^N x_k^{(i)}(y^{(i)}-\sum_{j=1,j\neq k}^M w_j x_j^{(i)})}{\sum_{i=1}^N (x_k^{(i)} y^{(i)})^2}$
+        \choice $w_k = \sum_{i=1}^N x_k^{(i)}(y^{(i)}-\sum_{j=1}^M w_j x_j^{(i)})$
+    \end{checkboxes}
+
+
+\vspace*{7mm}
+    
+    \subpart[1] \sone How many coefficients ($w_k$) do you need to estimate? When solving for these coefficients, how many equations do you have?
+
+    \begin{checkboxes}
+        % YOUR ANSWER
+        % Change \choice to \CorrectChoice for the appropriate selection/selections 
+        \choice $M$ coefficients, $M$ equations
+        \choice $M$ coefficients, $N$ equations
+        \choice $N$ coefficients, $M$ equations
+        \choice $N$ coefficients, $N$ equations
+    \end{checkboxes}
+    
+\end{subparts}
+
+\clearpage
+\part[2] Consider a dataset $D$ such that we fit a line $y = w_1 x + b_1$. Let $\Bar{x}$ and $\Bar{y}$ be the mean of the $x$ and $y$ coordinates, respectively. After mean centering the dataset to create $D_{new} =\big((x^{(1)} - \Bar{x}, y^{(1)} - \Bar{y}), \ldots, (x^{(n)} - \Bar{x}, y^{(n)} - \Bar{y}) \big)$, let the solution to linear regression on $D_{new}$ be $y = w_2 x + b_2$. Explain how $w_2$ compares to $w_1$ and justify.
+        
+    \begin{your_solution}[height=8cm]
+        % YOUR ANSWER
+    \end{your_solution}
+    
+    \end{parts}
+    \newpage
+
+\sectionquestion{Logistic Regression: Warm-Up}
+
+
+\begin{parts}
+        
+    \part[2] \sall Which of the following are true about logistic regression?
+    
+    \begin{list}{}
+        % YOUR ANSWER
+        % Change \emptysquare to \filledsquare for the appropriate selection
+        \item 
+            \emptysquare
+            % \filledsquare
+            Our formulation of binary logistic regression will work with both continuous and binary features.
+        \item 
+            \emptysquare
+            % \filledsquare
+            Binary Logistic Regression will form a linear decision boundary in our feature space.
+        \item 
+            \emptysquare
+            % \filledsquare
+            The function $\sigma(x) = \frac{1}{1+e^{-x}}$ is convex.
+        \item 
+            \emptysquare
+            % \filledsquare
+            The negative log-likelihood function for logistic regression $- \frac1N\sum_{i = 1}^N \log(\sigma(\xv^{(i)}))$ is not convex so gradient descent may get stuck in a sub-optimal local minimum.
+        \item 
+            \emptysquare
+            % \filledsquare
+            None of the above.
+    \end{list}
+    
+    
+    
+    \vspace*{1.2cm}
+    
+    \part[1] \sone The negative log-likelihood $J(\thetav)$ for binary logistic regression can be expressed as 
+    $$J(\thetav) = \frac{1}{N}\sum_{i=1}^N  \left[-y^{(i)}\left(\thetav^T\xv^{\left(i\right)}\right)+\log\left(1+\exp(\thetav^T\xv^{\left(i\right)})\right)\right]$$
+    where $\xv^{(i)}\in \mathbb{R}^{M+1}$ is the column vector of the feature values of the $i$-th data point, $y^{(i)}\in\{0, 1\}$ is the $i$-th class label, $\thetav\in\mathbb{R}^{M+1}$ is the weight vector. When we want to perform logistic ridge regression (i.e. with $\ell_2$ regularization), we modify our objective function to be 
+    $$ f(\thetav) = J(\thetav) + \lambda \frac{1}{2}\sum_{j=0}^M \theta_j^2$$
+    where $\lambda$ is the regularization weight, $\theta_j$ is the $j$th element in the weight vector $\thetav$. Suppose we are updating $\theta_k$ with learning rate $\alpha$, which of the following is the correct expression for the update?
+    
+    \begin{list}{}
+        % YOUR ANSWER
+        % Change \emptycircle to \filledcircle for the appropriate selection
+        \item 
+            \emptycircle 
+            % \filledcircle
+            $\theta_k\leftarrow \theta_k + \alpha \frac{\partial f(\thetav)}{\partial \theta_k}$ where 
+            $ \frac{\partial f(\thetav)}{\partial \theta_k}=\frac{1}{N}\sum_{i=1}^N \left[x^{(i)}_k\left(y^{(i)} -\frac{\exp(\thetav^T \xv^{(i)})}{1+\exp(\thetav^T \xv^{(i)})} \right)\right]+\lambda \theta_k$
+        \item 
+            \emptycircle 
+            % \filledcircle
+            $\theta_k\leftarrow \theta_k + \alpha \frac{\partial f(\thetav)}{\partial \theta_k}$ where 
+            $ \frac{\partial f(\thetav)}{\partial \theta_k}=\frac{1}{N}\sum_{i=1}^N \left[x^{(i)}_k\left(-y^{(i)} +\frac{\exp(\thetav^T \xv^{(i)})}{1+\exp(\thetav^T \xv^{(i)})} \right)\right]-\lambda \theta_k$
+        \item 
+            \emptycircle 
+            % \filledcircle
+            $\theta_k\leftarrow \theta_k - \alpha \frac{\partial f(\thetav)}{\partial \theta_k}$ where 
+            $ \frac{\partial f(\thetav)}{\partial \theta_k}=\frac{1}{N}\sum_{i=1}^N \left[x^{(i)}_k\left(-y^{(i)} +\frac{\exp(\thetav^T \xv^{(i)})}{1+\exp(\thetav^T \xv^{(i)})} \right)\right]+\lambda \theta_k$
+        \item 
+            \emptycircle 
+            % \filledcircle
+            $\theta_k\leftarrow \theta_k - \alpha \frac{\partial f(\thetav)}{\partial \theta_k}$ where 
+            $ \frac{\partial f(\thetav)}{\partial \theta_k}=\frac{1}{N}\sum_{i=1}^N \left[x^{(i)}_k\left(-y^{(i)} -\frac{\exp(\thetav^T \xv^{(i)})}{1+\exp(\thetav^T \xv^{(i)})} \right)\right]+\lambda \theta_k$
+    \end{list}
+
+    
+    \newpage
+    \part[2] Data is separable in one dimension if there exists a threshold $t$ such that all values less than $t$ have one class label and all values greater than or equal to $t$ have the other class label.
+    If you train an unregularized logistic regression model for infinite iterations on training data that is separable in at least one dimension,
+    the corresponding weight(s) can go to infinity in magnitude.
+    What is an explanation for this phenomenon? \\
+    \textit{Hint}: Think about what happens to the probabilities if we train an unregularized logistic regression model, and the role of the weights when calculating such probabilities.
+
+    
+    \begin{your_solution}[height=6cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    
+    \part[2] \sall How does regularization (such as $\ell_1$ and $\ell_2$) help correct the problem in the previous question?
+
+    \begin{list}{}
+        % YOUR ANSWER
+        % Change \emptysquare to \filledsquare for the appropriate selection
+        \item 
+            \emptysquare
+            % \filledsquare
+            $\ell_1$ regularization prevents weights from going to infinity by penalizing the count of non-zero weights.
+        \item 
+            \emptysquare
+            % \filledsquare
+            $\ell_1$ regularization prevents weights from going to infinity by reducing some of the weights to 0, effectively removing some of the features. 
+        \item 
+            \emptysquare
+            % \filledsquare
+            $\ell_2$ regularization prevents weights from going to infinity by reducing the value of some of the weights to \textit{close} to 0 (reducing the effect of a feature but not necessarily removing it). 
+        \item 
+            \emptysquare
+            % \filledsquare
+            None of the above.
+    \end{list}
+
+\end{parts}
+\clearpage
+\sectionquestion{Logistic Regression: Small Dataset}
+\label{sec:warm-up}
+
+The following questions should be completed before you start the programming component of this assignment.
+
+The following dataset consists of 4 training examples, where $x_k^{(i)}$ denotes the $k$-th dimension of the $i$-th training example $\xv^{(i)}$, and $y^{(i)}$ is the corresponding label ($k \in \{1, 2, 3\}$ and $i \in \{1, 2, 3, 4\}$).
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+$i$ & $x_{1}$ & $x_{2}$ & $x_{3}$ & $y$ \\ \hline
+1   & 0       &       0 &       1 & 0   \\ \hline
+2   & 0       &       1 &       0 & 1   \\ \hline
+3   & 0       &       1 &       1 & 1   \\ \hline
+4   & 1       &       0 &       0 & 0   \\ \hline
+
+\end{tabular}
+\end{center}
+
+A binary logistic regression model is trained on this dataset, and the parameter vector $\thetav$ after training is
+
+\[\thetav = \begin{bmatrix}1.5 & 2 & 1\end{bmatrix}^T.\]
+
+\textit{Note}: There is \textbf{no intercept term} used in this problem.
+
+Use the data above to answer the following questions. For all numerical answers, please use one number rounded to the fourth decimal place; e.g., 0.1234. Showing your work in these questions is optional, but it is recommended to help us understand where any misconceptions may occur.
+
+\begin{parts}
+    \part[2] Calculate $J(\thetav$), $\frac{1}{N}$ times the negative log-likelihood over the given data after iteration $n$. (Note here we are using natural log, i.e., the base is $e$). 
+    
+    \begin{your_solution}[title=$J(\thetav)$,height=2cm,width=3cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    
+    \begin{your_solution}[title=Work,height=8cm]
+    % YOUR ANSWER
+    \end{your_solution}
+    
+    \pagebreak
+    
+    \part[2] Calculate the gradients $\frac{\partial J(\thetav)}{\partial \theta_j}$ with respect to $\theta_{j}$ for all $j \in \{1, 2, 3\}$.
+
+    \begin{your_solution}[title=$\partial J(\thetav)/\partial \theta_1$,height=1.8cm,width=5.2cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    \begin{your_solution}[title=$\partial J(\thetav)/\partial \theta_2$,height=1.8cm,width=5.2cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    \begin{your_solution}[title=$\partial J(\thetav)/\partial \theta_3$,height=1.8cm,width=5.2cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    
+    \begin{your_solution}[title=Work,height=18cm]
+    % YOUR ANSWER
+    \end{your_solution}
+
+    
+    \clearpage
+    
+    \part[1] Update the parameters following the parameter update step $\theta_j \leftarrow \theta_j - \alpha \frac{\partial J(\thetav)}{\partial \theta_j}$ and write the updated (numerical) value of the vector $\thetav$. Use learning rate $\alpha = 1$.
+
+    \begin{your_solution}[title=$\theta_1$,height=1.8cm,width=5.2cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    \begin{your_solution}[title=$\theta_2$,height=1.8cm,width=5.2cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    \begin{your_solution}[title=$\theta_3$,height=1.8cm,width=5.2cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    
+    \begin{your_solution}[title=Work, height=6cm]
+    % YOUR ANSWER 
+    \end{your_solution}
+    
+    \clearpage
+    
+    
+
+
+ \clearpage
+ 
+ \end{parts}
+ 
+ % new question
+\sectionquestion{Logistic Regression: Adversarial Attack}
+\label{sec:images}
+
+An image can be represented numerically as a vector of values for each pixel. Image classification tasks then use this vector of pixel values as features to predict an image label.  
+
+An automobile company is trying to gather data by asking participants to submit grayscale images of cars. Each pixel has an intensity value in the continuous range $[0,1]$, zero being the darkest. The company then runs a logistic regression model to predict if the photo actually contains a car. After training the model on a training dataset, the company achieves a mediocre test error. The company wants to improve the model and offers monetary compensation to people who can submit photos that contain a car and make the model predict ``false'' (i.e., a false negative), as well as photos that do not contain a car and make the model predict ``true'' (i.e., a false positive). Furthermore, the company releases the parameters of their learned logistic regression model. Let's investigate how to use these parameters to understand the model's weaknesses.
+
+\begin{parts}
+ 
+\part[2]  Given the company's model parameters $\thetav$ (i.e., the logistic regression coefficients), gradient ascent can be used to find the vector of pixel values that maximizes the ``car'' prediction. What is the gradient update rule to do so? Write (1) the objective function, (2) the gradient of the objective function with respect to the feature \emph{values} and (3) the update rule. 
+Use $\xv$ as the input vector. \textit{Hint}: You are updating $\xv$ to produce an input that confuses the model.
+
+\begin{your_solution}[height=6cm]
+ % YOUR ANSWER 
+\end{your_solution}
+
+
+\part[1] Modify the procedure in the previous question to find the image that minimizes the ``car'' prediction.
+
+\begin{your_solution}[height=5cm]
+ % YOUR ANSWER 
+\end{your_solution}
+
+\clearpage
+
+\part[2] To generate an image, we require the feature values to be in the range $[0,1]$. Propose a different procedure that optimizes the ``car'' prediction subject to this constraint and does not require a gradient calculation. What is the runtime of this procedure?
+
+\begin{your_solution}[height=5cm]
+ % YOUR ANSWER 
+\end{your_solution}
+
+
+\vspace*{1cm}
+
+
+\part[2] \sall Now let's consider whether logistic regression is well-suited for this task. Suppose the exact same white car in a dark background was used to generate the training set. The training photos were captured with the side view of the car centered in the photo at a distance of between 30-50 meters from the camera. Which (if any) of the below descriptions of a \textbf{test image} would the model predict as ``car''?
+
+\begin{list}{}
+    % YOUR ANSWER
+    % Change \emptysquare to \filledsquare for the appropriate selection
+    \item 
+        \emptysquare
+        % \filledsquare
+        A new photo with the same car centered and 60 meters away from the camera.
+    \item 
+        \emptysquare
+        % \filledsquare
+        A new photo with the same car in the upper right corner of the image.
+    \item 
+        \emptysquare
+        % \filledsquare
+        Identical to one of the training photos, but the car replaced with an equal size white cardboard cutout of the car.
+    \item 
+        \emptysquare
+        % \filledsquare
+        Identical to one of the training photos, but the background changed to white.
+    \item 
+        \emptysquare
+        % \filledsquare
+        None of the above.
+\end{list}
+
+
+\end{parts}
+
+\clearpage
+
+\sectionquestion{Vectorization and Pseudocode}
+\label{sec:pseudocode}
+
+The following questions should be completed before you start the programming component of this assignment. Assume the \texttt{dtype}s of all \texttt{ndarray}s are \texttt{np.float64}. Vectors are 1D \texttt{ndarray}s.
+
+\begin{parts}
+\part[2] \sall Consider a matrix $\Xv \in \mathbb{R}^{N \times M}$ and vector $\vv \in \mathbb{R}^M$. We can create a new vector $\uv \in \mathbb{R}^N$ whose $i$-th element is the dot product between $\vv$ and the $i$-th row of $\Xv$ using NumPy as follows:
+\begin{lstlisting}[language=Python,escapechar=@]
+# X and v are numpy ndarrays
+# X.shape == (N, M), v.shape == (M,)
+u = np.zeros(X.shape[0])
+for i in range(X.shape[0]):
+    for j in range(X.shape[1]):
+        u[i] += X[i, j] * v[j]
+\end{lstlisting}
+\vspace*{-2.5mm}
+Which of the following produces the same result?
+\begin{list}{}
+    % YOUR ANSWER
+    % Change \emptysquare to \filledsquare for the appropriate selection
+    \item
+        \emptysquare
+        % \filledsquare
+        \texttt{u = np.dot(X, v)}
+    \item
+        \emptysquare
+        % \filledsquare
+        \texttt{u = np.dot(v, X)}
+    \item
+        \emptysquare
+        % \filledsquare
+        \texttt{u = np.matmul(X, v)}
+    \item
+        \emptysquare
+        % \filledsquare
+        \texttt{u = np.matmul(v, X)}
+    \item
+        \emptysquare
+        % \filledsquare
+        \texttt{u = X * v}
+    \item
+        \emptysquare
+        % \filledsquare
+        \texttt{u = v * X}
+    \item
+        \emptysquare
+        % \filledsquare
+        \texttt{u = X @ v}
+    \item
+        \emptysquare
+        % \filledsquare
+        \texttt{u = v @ X}
+    \item
+        \emptysquare
+        % \filledsquare
+        None of the above.
+\end{list}
+
+\part Consider a matrix $\Xv \in \mathbb{R}^{N \times M}$ and vector $\wv \in \mathbb{R}^N$. Let $\Omegav = \sum_{i=0}^{N-1} w_i \left(\xv_i - \overline{\xv_i}\right) \left(\xv_i - \overline{\xv_i}\right)^T$ where $\xv_i \in \mathbb{R}^{M}$ is the \textit{column} vector denoting the $i$-th \textit{row} of $\xv$, $\overline{\xv_i} \in \mathbb{R}$ is the mean of $\xv_i$, and $w_i \in \mathbb{R}$ is the $i$-th element of $\wv$ ($i \in \{0, 1, \cdots, N-1\}$). For the following questions, use \texttt{X} and \texttt{w} for $\Xv$ and $\wv_i$, respectively. \texttt{X.shape == (N, M)}, \texttt{w.shape == (N,)}. \textbf{You must use NumPy and vectorize your code for full credit.} Do \textit{not} use functions which are essentially wrappers for Python loops and provide little performance gain, such as \texttt{np.vectorize}.
+\begin{subparts}
+\subpart[2] Write \textit{one} line of valid Python code that constructs a matrix whose $i$-th row is $\left(\xv_i - \overline{\xv_i}\right)^T$. \\
+\begin{your_solution}[height=1.75cm,title=Your Answer (CASE SENSITIVE)]
+% Put your solution in the your_code_solution environment
+\begin{your_code_solution}
+
+\end{your_code_solution}
+\end{your_solution}
+
+\subpart[2] Assume the result from (a) is stored in \texttt{M}. Write \textit{one} line of valid Python code that computes $\Omegav$ from \texttt{M}. \\
+\begin{your_solution}[height=1.75cm,title=Your Answer (CASE SENSITIVE)]
+% Put your solution in the your_code_solution environment
+\begin{your_code_solution}
+
+\end{your_code_solution}
+\end{your_solution}
+
+\end{subparts}
+
+\newpage
+\part Now we will compare two different optimization methods using pseudocode. Consider a model with parameter $\thetav \in \mathbb{R}^M$ being trained with a design matrix $\Xv \in \mathbb{R}^{N \times M}$ and labels $\yv \in \mathbb{R}^M$. Say we update $\thetav$ using the objective function $J(\thetav|\Xv, \yv) = \frac{1}{N} \sum_{i=1}^N J^{(i)}(\thetav|\xv^{(i)}, y^{(i)}) \in \mathbb{R}$. Recall that an epoch refers to one complete cycle through the dataset.
+\begin{subparts}
+\subpart[2] Complete the pseudocode for gradient descent.
+\begin{lstlisting}[language=Python,escapechar=@]
+def dJ(theta, X, y, i):
+    (omitted)  # Returns @$\partial J^{(i)}(\thetav|\xv^{(i)}, y^{(i)})/\partial\thetav$@
+    # You may call this function in your pseudocode.
+
+def GD(theta, X, y, learning_rate):
+    for epoch in range(num_epoch):
+        @\underline{$~~~$\textbf{Complete this section with the update rule}$~~~$}@
+    return theta  # return the updated theta
+\end{lstlisting}
+\vspace*{-5mm}
+\begin{your_solution}[height=4.5cm,title={Your Answer (CASE SENSITIVE, 7 lines max)}]
+% Put your solution in the your_code_solution environment
+\begin{your_code_solution}
+
+\end{your_code_solution}
+\end{your_solution}
+
+\subpart[2] Complete the pseudocode for stochastic gradient descent that samples \textit{without} replacement.
+\begin{lstlisting}[language=Python,escapechar=@]
+def dJ(theta, i):
+    (omitted)  # Returns @$\partial J^{(i)}(\thetav|\xv^{(i)}, y^{(i)})/\partial\thetav$@
+    # You may call this function in your pseudocode.
+
+def SGD(theta, X, y, learning_rate):
+    for epoch in range(num_epoch):
+        indices = shuffle(range(len(X)))
+        for i in indices:
+            @\underline{$~~~$\textbf{Complete this section with the update rule}$~~~$}@
+    return theta  # return the updated theta
+\end{lstlisting}
+\vspace*{-5mm}
+\begin{your_solution}[height=4.5cm,title={Your Answer (CASE SENSITIVE, 7 lines max)}]
+% Put your solution in the your_code_solution environment
+\begin{your_code_solution}
+
+\end{your_code_solution}
+\end{your_solution}
+
+\end{subparts}
+
+\end{parts}
+\clearpage
+
+
+\sectionquestion{Programming Empirical Questions}
+\label{sec:empirical}
+
+The following questions should be completed as you work through the programming component of this assignment. \textbf{Please ensure that all plots are computer-generated}.
+
+\begin{parts}
+\part[2]
+For \emph{Model 1}, using the data in the \texttt{largedata} folder in the handout, make a plot that shows the \textit{average} negative log-likelihood for the training and validation data sets after each of 5,000 epochs. The $y$-axis should show the negative log-likelihood and the $x$-axis should show the number of epochs. (Note that running the code for 5,000 epochs might take longer than one minute. This is okay since we won't run your code for more than 500 epochs during auto-grading.)
+
+\begin{your_solution}[height=8cm]
+% YOUR ANSWER 
+\begin{center}
+% Here is an example of how to include an image:
+% \includegraphics{IMAGE FILE PATH HERE}
+\end{center}
+\end{your_solution}
+    
+
+\part[2]
+For \emph{Model 2}, make a plot as in the previous question.
+
+\begin{your_solution}[height=8cm]
+% YOUR ANSWER 
+\begin{center}
+% Here is an example of how to include an image:
+% \includegraphics{IMAGE FILE PATH HERE}
+\end{center}
+\end{your_solution}
+
+
+\clearpage
+
+\part[2]
+Write a few sentences explaining the output of the above experiments. In particular, do the training and validation log-likelihood curves look the same, or different? Why? 
+
+\begin{your_solution}[height=8.5cm]
+% YOUR ANSWER 
+\end{your_solution}
+
+\part[2]
+Make a table with your train and test error for the large data set (found in the \texttt{largedata} folder in the handout) for each of the two models after running for 5,000 epochs. Please use one number rounded to the fourth decimal place, e.g., 0.1234.
+
+\begin{your_solution}[height=8cm, title=Error Rates]
+% YOUR ANSWER 
+% Replace the ? marks in the table with your answers
+ \begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|l}
+    \toprule
+    & Train Error & Test Error \\ 
+    \midrule
+    Model 1 & ? & ? \\ 
+    Model 2 & ? & ? \\ 
+    \bottomrule
+    \end{tabular}
+    \caption{``Large Data'' Results}
+    \label{results}
+\end{table}
+\end{your_solution}
+
+
+\newpage
+\part[2]
+For \emph{Model 1}, using the data in the \texttt{largedata} folder of the handout, make a plot comparing the training average negative log-likelihood over epochs for three different values for the learning rates, $\alpha \in \{10^{-4}, 10^{-5}, 10^{-6}\}$. The $y$-axis should show the negative log-likelihood, the $x$-axis should show the number of epochs (from 1 to 5,000 epochs), and the plot should contain three curves corresponding to the three values of $\alpha$. Provide a legend that indicates the learning rate $\alpha$ for each curve.
+        
+\begin{your_solution}[height=9cm]
+% YOUR ANSWER 
+\begin{center}
+% Here is an example of how to include an image:
+% \includegraphics{IMAGE FILE PATH HERE}
+\end{center}
+\end{your_solution}
+
+\part[2] Compare how quickly each curve in the previous question converges.
+
+\begin{your_solution}[height=8cm]
+% YOUR ANSWER
+\end{your_solution}
+
+\newpage
+\part[2] Now we will compare the effectiveness of bag-of-words and word2vec. Consider \textit{Model 3}, which is \textit{Model 1} with the size of the dictionary reduced to 300 to match \textit{Model 2}'s embedding. We provided you the \textit{validation} average negative log-likelihood over 5,000 epochs in \texttt{model3\_val\_nll.txt}. Using this, make a plot that compares the validation average negative log-likelihood of all three models over 5,000 epochs. The $y$-axis should show the negative log-likelihood and the $x$-axis should show the number of epochs.
+
+\begin{your_solution}[height=9cm]
+% YOUR ANSWER 
+\begin{center}
+% Here is an example of how to include an image:
+% \includegraphics{IMAGE FILE PATH HERE}
+\end{center}
+\end{your_solution}
+
+\part[2] Compare and contrast the performance of the three models based on the curves in the previous question. Recall that a better model is one that attains lower negative log-likelihood faster. Explain the relative difference in performance focusing on the dimensions and design of the input data.
+
+\begin{your_solution}[height=8cm]
+% YOUR ANSWER
+\end{your_solution}
+
+
+\end{parts}\newpage
+\newpage
+\section{Collaboration Questions}
+After you have completed all other components of this assignment, report your answers to these questions regarding the collaboration policy. Details of the policy can be found \href{http://www.cs.cmu.edu/~mgormley/courses/10601/syllabus.html}{here}.
+\begin{enumerate}
+    \item Did you receive any help whatsoever from anyone in solving this assignment? If so, include full details.
+    \item Did you give any help whatsoever to anyone in solving this assignment? If so, include full details.
+    \item Did you find or come across code that implements any part of this assignment? If so, include full details.
+\end{enumerate}
+
+\begin{your_solution}[height=6cm]
+% YOUR ANSWER 
+
+\end{your_solution}
+\newpage
+\end{questions}
+\section{Programming (70 points)}
+
+Your goal in this assignment is to implement a working Natural Language Processing (NLP) system using binary logistic regression. Your algorithm will determine whether a movie review is positive or negative. You will also explore various approaches to feature engineering for this task.
+
+\textbf{Note}: Before starting the programming, you should work through the written component to get a good understanding of important concepts that are useful for this programming component.
+
+
+
+\subsection{The Task}\label{task}
+
+{\bf Datasets } 
+Download the zip file from the course website, which contains the data for this assignment. This data comes from the Movie Review Polarity dataset.\footnote{For more details, see \url{http://www.cs.cornell.edu/people/pabo/movie-review-data/}} In the data files, each line is a single training example that consists of a label (0 for negative reviews and 1 for positive ones) and a set of words. The format of each training example (each line) is \lstinline{label\tword1 word2 word3 ... wordN\n}, where words are separated from each other with white-space and the label is separated from the words with a tab character.\footnote{The data files are in tab-separated-value (\lstinline{.tsv}) format. This is identical to a comma-separated-value (\lstinline{.csv}) format except that instead of separating columns with commas, we separate them with a tab character, \lstinline{\\t}}
+
+Examples of the data are as follows:
+ 
+\begin{lstlisting}
+1 david spade has a snide , sarcastic sense of humor that works ... 
+0 " mission to mars " is one of those annoying movies where , in...
+1 anyone who saw alan rickman's finely-realized performances in ...
+1 ingredients : man with amnesia who wakes up wanted for murder ...
+1 ingredients : lost parrot trying to get home , friends synopsi... 
+1 note : some may consider portions of the following text to be ...
+0 aspiring broadway composer robert ( aaron williams ) secretly ...
+0 america's favorite homicidal plaything takes a wicked wife in ...
+\end{lstlisting}
+
+{\bf Feature Engineering } 
+In lecture, we saw that we can apply logistic regression to real-valued inputs of fixed length (e.g. $\xv^{(i)}\in\mathbb{R}^n$). However, each training example (movie review) above has variable length and are not real-valued, so we cannot directly run logistic regression on the dataset above.
+
+To be able to run logistic regression on the dataset, we first need to transform it using some basic feature engineering techniques. In this homework, we will use two common techniques: a bag-of-words (BoW) model and a word embeddings model. These feature engineering models are described in full detail in the next section (\ref{featuremodels}).
+
+{\bf Programs } 
+At a high level, you will write two programs for this homework: \texttt{feature.py} and \texttt{lr.py}. \texttt{feature.py} takes in the raw input data and produces a real-valued vector for each training, validation, and test example. \texttt{lr.py} then takes in these vectors and trains a logistic regression model to predict whether each example is a positive or negative review.
+
+
+\subsection{Feature Models}\label{featuremodels}
+In order to transform a set of words into vectors, we rely on two popular methods of feature engineering: bag-of-words and word embeddings. In this homework, you will have the opportunity to implement both and reason about each method's strengths and weaknesses.
+
+In the subsections below, we use $\boldsymbol{\phi}$ to denote a feature engineering method (bag-of-words or word embeddings) and  $\xv^{(i)}$ to denote a training example (a set of English words as seen in \ref{task}).
+
+\subsubsection{Model 1: Bag-of-Words}
+
+A \emph{bag-of-words} feature vector $\boldsymbol{\phi}_1\left(\xv^{(i)}\right) = \bf{1}_{occur}( \xv^{(i)},$ $\bf{Vocab})$ indicates which words in vocabulary $\bf{Vocab}$ occur at least once in the $i$-th movie review $\xv^{(i)}$. Specifically, the bag-of-words method $\boldsymbol{\phi}_1$ produces an indicator vector of length $|\bf{Vocab}|$, where the $j$-th entry will be set to 1 if the $j$-th word in $\bf{Vocab}$ occurs at least once in the movie review. The $j$-th entry will be set to 0 otherwise. %As a result, $\boldsymbol{\phi}_1\left(\xv^{(i)}\right)$ indicates which words in $\bf{Vocab}$ are present in $\xv^{(i)}$ and which are not.
+
+{\bf Vocabulary }
+We provide a dictionary file (\lstinline{dict.txt}) that contains the vocabulary (the set of words we recognize) and the order of the words. This dictionary is constructed from the training data, so it includes all the words from the training data, but some words in the validation and test data may not be present in the dictionary. Each line in the dictionary file is in the following format: \lstinline{word index\n}. Words and indexes are separated with \emph{whitespace}. Examples of the dictionary content are as follows:
+\begin{lstlisting}
+   films 0
+   adapted 1
+   from 2
+   comic 3
+\end{lstlisting}
+
+As an example, if a movie review $\xv^{(i)}$ contained only the word \lstinline{films}, then $\boldsymbol{\phi}_1\left(\xv^{(i)}\right)$ would be a one-hot vector where the first entry is a 1 and the rest are 0.
+
+\subsubsection{Model 2: Word Embeddings}
+
+Rather than simply indicating which words are present, word embeddings represent each word by ``embedding'' it into a low-dimensional vector space, which may carry more information about the semantic meaning of the word. In this homework, we use the \emph{word2vec} embeddings, a commonly used set of feature vectors. \footnote{For more details on how these embeddings were trained, see the original paper at  \url{https://arxiv.org/pdf/1301.3781.pdf}}
+
+{\bf Embeddings }
+\texttt{word2vec.txt} contains the \emph{word2vec} embeddings of \texttt{15k} words. Note that not every word in the movie review examples will be included in the provided \texttt{word2vec.txt} file. Each line consists of a word and its embedding separated by tabs: \lstinline{word\tfeature1\tfeature2\t...feature300\n}. Each word's embedding is always a 300-dimensional vector. As an example, here are the first few lines of \texttt{word2vec.txt}:
+\begin{lstlisting}
+   films   -0.598   -0.622   -0.637    4.742    4.323   -5.980   ...
+   adapted  0.175   -0.399   -2.337   -0.299   -4.781   -2.029   ...
+   from    -0.114   -2.072   -0.874   -0.483    0.354   -2.205   ...
+   comic   -0.119   -1.952   -0.226   -0.825    5.625   -0.266   ...
+\end{lstlisting}
+Words in \texttt{word2vec.txt} are listed in the same order as in the dictionary \lstinline{dict.txt}.
+
+{\bf Using Word Embeddings }
+For this model, there will be two steps in the feature engineering process: 
+    
+\begin{enumerate}
+    \item First, we would like to exclude words from the movie review that are not included in the word2vec dictionary. Let  $\xv\_\text{trim}^{(i)} = \text{TRIM}(\xv^{(i)})$, where $\text{TRIM}(\xv^{(i)})$ trims the list of words $\xv^{(i)}$ by only including words of $\xv^{(i)}$ present in \texttt{word2vec.txt}.
+    \item Second, we want to take the trimmed vector $\xv\_\text{trim}^{(i)}$ and convert it to the final feature vector by averaging the word2vec embeddings of its words:
+    $$\boldsymbol{\phi}_2\left(\xv^{(i)}\right) = \frac{1}{J} \sum_{j=1}^J word2vec(\xv\_\text{trim}^{(i)}_j) $$
+    where $J$ denotes the number of words in $\xv\_\text{trim}^{(i)}$ and $\xv\_\text{trim}^{(i)}_j$ is the j-th word in $\xv\_\text{trim}^{(i)}$.
+    
+     In the given equation, $word2vec(\xv\_\text{trim}^{(i)}_j) \in \mathbb{R}^{300}$ is the \emph{word2vec} feature vector for the word $\xv\_\text{trim}^{(i)}_j$.
+\end{enumerate}
+    
+The following \textbf{example} provides a reference for Model 2:
+
+\begin{itemize}
+    \item Let $\xv^{(i)}$ denote the sentence ``\texttt{a hot dog is not a sandwich because it is not\\ square}''.
+    \item A toy \emph{word2vec} dictionary is given as follows: 
+    \begin{lstlisting}
+hot         0.1    0.2    0.3
+not        -0.1    0.2   -0.3
+sandwich    0.0   -0.2    0.4
+square      0.2   -0.1    0.5
+    \end{lstlisting}
+    \item Then, $\xv\_\text{trim}^{(i)}$ denotes the trimmed review ``\texttt{hot not sandwich not square}''. In this trimmed text, the words that are not in the \emph{word2vec} dictionary are excluded. Also note that we keep the order of words and do not de-duplicate words in the trimmed text. \footnote{Keeping duplicates is equivalent to weighting words by their frequency. If \lstinline{"good"} appears 3 times as often as \lstinline{"bad"}, the movie review is more likely to be positive than negative.}
+    \item The feature for $\xv^{(i)}$ can be calculated as
+        \begin{align*} \boldsymbol{\phi}_2(\xv^{(i)}) &= \frac{1}{5}\big( word2vec(\text{hot}) + 2 \cdot word2vec(\text{not}) + word2vec(\text{sandwich}) + word2vec(\text{square}) \big) \\
+        &= \begin{bmatrix} 0.02 & 0.06 & 0.12 \end{bmatrix}^T.
+        \end{align*}
+\end{itemize}
+
+
+The motivation of this model is that pre-trained feature representations such as word2vec embeddings may provide richer information about semantics of the sentence. You will observe whether using pre-trained word embeddings to build feature vectors will improve or degrade accuracy over the bag-of-words features. 
+
+
+\subsection{\texttt{feature.py}}\label{featurepy}
+
+\lstinline{feature.py} implements bag-of-words and word embeddings (described above in \ref{featuremodels}) to transform raw training examples (a label and a list of English words) to formatted training examples (a label and a feature vector, which may be created either through bag-of-words or through word embeddings).
+
+{\bf Inputs }
+\begin{itemize}
+    \item \textbf{Input data} for training, validation, and testing. Each data point contains a label and an English movie review in the format described in \ref{task}.
+    \item \textbf{Dictionary and word2vec embeddings} to use for the bag-of-words and word embedding feature extraction methods, respectively.
+    \item \textbf{A feature flag} that indicates whether to use Model 1 (bag-of-words) or Model 2 (word2vec).
+\end{itemize}
+
+{\bf Outputs }
+\begin{itemize}
+    \item \textbf{Formatted data} for training, validation, and testing. You should perform feature extraction on \textit{each} of the training, validation, and test sets. Each data point contains a label and a feature vector, which is either the length of the vocabulary (when using bag-of-words) or length 300 (when using word2vec).
+\end{itemize}
+
+{\bf Output Format }
+Each output file (one for training data, one for validation, and one for testing) should contain the formatted presentation of each example printed on a new line. Use \lstinline{\n} to create a new line. The format for each line should exactly match \lstinline{label\tvalue1\tvalue2\tvalue3\t...valueM\n}.
+
+Each line corresponds to a particular movie review, where the first entry is the label and the rest are the features in the feature vector. If bag-of-words is used, each feature is 1 or 0 depending on whether the corresponding dictionary word is present in the review. If word embeddings are used, the rows are the summed up word2vec vectors for all the words present in the dictionary. All entries are separated with a tab character. The handout folder contains example formatted outputs; they are partially reproduced below for your reference. For Model 2, please round your outputs to 6 decimal places.
+
+For Model 1 (bag-of-words):
+\begin{lstlisting}
+1	0	0	1	0	0	1	0	...
+0	0	0	1	0	0	1	1	...
+1	0	0	0	0	1	0	1	...
+1	1	0	0	0	0	1	1	...
+\end{lstlisting}
+
+For Model 2 (word embeddings):
+\begin{lstlisting}
+1.000000	-0.213174	 0.135342	-0.254539	...
+1.000000	-0.202170	 0.294211	-0.374678	...
+1.000000	-0.222277	 0.299419	-0.524649	...
+1.000000	-0.229423	-0.219987	-0.374537	...
+\end{lstlisting}
+
+\subsection{\texttt{lr.py}}\label{lrpy}
+
+\lstinline{lr.py} implements a logistic regression classifier that takes in formatted training data and produces a label (either 0 or 1) that corresponds to whether each movie review was negative or positive. See the Logistic Regression Review section  (\ref{lrreview}) for the stochastic gradient descent loss function (and for more details on how to train the classifier).
+
+{\bf Inputs }
+\begin{itemize}
+    \item \textbf{Formatted data} for training, validation, and testing. Each data point contains a label and a corresponding feature vector.
+    \item \textbf{Dictionary and word2vec embeddings} to use for the bag-of-words and word embedding feature extraction methods, respectively.
+    \item \textbf{The number of epochs} to train for, which will be passed in as a command line argument.
+\end{itemize}
+
+Note that we do \textit{not} need to indicate whether the input feature vectors are bag-of-words or word2vec, since in either case we have a set of real-valued vectors to perform logistic regression on.
+
+\newpage % Otherwise, "Requirements" gets put on the last line
+
+{\bf Requirements }
+\begin{itemize}
+    \item Include an intercept term in your model. You can either treat the intercept term as a separate variable, or fold it into the parameter vector. In either case, make sure you update the intercept parameter correctly.
+    \item Initialize all model parameters to 0.
+    \item Use stochastic gradient descent (SGD) to train the logistic regression model. Details on the loss function and gradient update rule are provided in are provided in the Logistic Regression Review (\ref{lrreview}) section.
+    \item Perform SGD updates on the training data \textbf{in the order that the data is given in the input file}. While we would normally shuffle training examples in SGD, we need training to be deterministic in order to autograde this assignment (otherwise, we would not know whether your answer differs from ours because it is incorrect or because your model saw the data in a different order). \textbf{Do not shuffle the training data.}
+\end{itemize}
+
+{\bf Outputs }
+\begin{itemize}
+    \item \textbf{Labels} for the training and testing data.
+    \item \textbf{Metrics} for the training and testing error.
+\end{itemize}
+
+{\bf Output Labels Format }
+Your \lstinline{lr} program should produce two output \texttt{.labels} files containing the predictions of your model on training data and test data. Each file should contain the predicted labels for each example printed on a new line. The name of these files will be passed as command line arguments. Use \lstinline{\n} to create a new line. An example of the labels is given below.
+
+\begin{lstlisting}
+0
+0
+1
+0
+\end{lstlisting}
+
+{\bf Output Metrics Format }
+Your program should generate a \texttt{.txt} file where you report the final training and testing error after training has completed. The name of this file will be passed as a command line argument.
+
+All of your reported numbers should be within 0.00001 of the reference solution, and round the error values to 6 decimal places. The following example is the reference solution for the large dataset with Model 1 after 500 training epochs. See \texttt{model1\_metrics\_out.txt} in the handout.
+
+\begin{lstlisting}
+error(train): 0.042500
+error(test): 0.150000
+\end{lstlisting}
+
+Each line in the output file should be terminated by a newline character \lstinline{\n}. There is a whitespace character after the colon.
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width = 0.7\textwidth]{Pipeline_v3.png}
+        \caption{Programming pipeline for sentiment analyzer based on binary logistic regression}
+        \label{pipeline}
+\end{figure}
+
+\subsection{Command Line Arguments}\label{commandline}
+The autograder runs and evaluates the output from the files generated, using the following command (note \lstinline{feature} will be run before \lstinline{lr}):
+
+\begin{tabbing}
+\=\texttt{\$ \textbf{python} feature.\textbf{py} [args1\dots]}\\
+\>\texttt{\$ \textbf{python} lr.\textbf{py} [args2\dots]}
+\end{tabbing}
+
+Where above \texttt{[args1\dots]} is a placeholder for nine command-line arguments: \texttt{<train\_input>}\newline \texttt{<validation\_input> <test\_input> <dict\_input>  <feature\_dictionary\_input> \newline <formatted\_train\_out> <formatted\_validation\_out>  <formatted\_test\_out> \newline <feature\_flag>}. These arguments are described in detail below:
+\begin{enumerate}
+    \item \texttt{<train\_input>}: path to the training input \texttt{.tsv} file (see Section~\ref{task})
+    \item \texttt{<validation\_input>}: path to the validation input \texttt{.tsv} file (see Section~\ref{task})
+    \item \texttt{<test\_input>}: path to the test input \texttt{.tsv} file (see Section~\ref{task})
+    \item \texttt{<dict\_input>}: path to the dictionary input \texttt{.txt} file (see Section~\ref{task})
+    \item \texttt{<feature\_dictionary\_input>}: path to the word2vec feature dictionary \texttt{.tsv} file (see Section~\ref{featuremodels})
+    \item \texttt{<formatted\_train\_out>}: path to output \texttt{.tsv} file to which the feature extractions on the \emph{training} data should be written (see Section~\ref{featurepy})
+    \item \texttt{<formatted\_validation\_out>}: path to output \texttt{.tsv} file to which the feature extractions on the \emph{validation} data should be written (see Section~\ref{featurepy})
+    \item \texttt{<formatted\_test\_out>}: path to output \texttt{.tsv} file to which the feature extractions on the \emph{test} data should be written (see Section~\ref{featurepy})
+    \item \texttt{<feature\_flag>}: integer taking value 1 or 2 that specifies whether to construct the Model 1 feature set or the Model 2 feature set (see Section~\ref{featuremodels})---that is, if \texttt{feature\_flag == 1} use Model 1 features; if \texttt{feature\_flag == 2} use Model 2 features
+\end{enumerate}
+
+
+Likewise, \texttt{[args2\dots]} is a placeholder for eight command-line arguments: \texttt{<formatted\_train\_input>} \texttt{<formatted\_validation\_input> <formatted\_test\_input> <train\_out> <test\_out> <metrics\_out> <num\_epoch> <learning\_rate>}. These arguments are described in detail below:
+\begin{enumerate}
+    \item \texttt{<formatted\_train\_input>}: path to the formatted training input \texttt{.tsv} file (see Section~\ref{featurepy})
+    \item \texttt{<formatted\_validation\_input>}: path to the formatted validation input \texttt{.tsv} file (see Section~\ref{featurepy})
+    \item \texttt{<formatted\_test\_input>}: path to the formatted test input \texttt{.tsv} file (see Section~\ref{featurepy})
+    \item \texttt{<train\_out>}: path to output \texttt{.labels} file to which the prediction on the \emph{training} data should be written (see Section~\ref{lrpy})
+    \item \texttt{<test\_out>}: path to output \texttt{.labels} file to which the prediction on the \emph{test} data should be written (see Section~\ref{lrpy})
+    \item \texttt{<metrics\_out>}: path of the output \texttt{.txt} file to which metrics such as train and test error should be written (see Section~\ref{lrpy})
+    \item \texttt{<num\_epoch>}: integer specifying the number of times SGD loops through all of the training data (e.g., if \texttt{<num\_epoch>} equals 5, then each training example will be used in SGD 5 times). 
+    \item \texttt{<learning\_rate>}: float specifying the learning rate; $0.00001$ for the \textbf{large} dataset, and $0.00003$ for the \textbf{small} dataset
+\end{enumerate}
+
+As an example, the following two command lines would run your programs on the large dataset in the handout for 500 epochs using the features from Model 1.
+
+\begin{lstlisting}[language=Shell]
+$ python feature.py largedata/train_data.tsv largedata/valid_data.tsv
+largedata/test_data.tsv dict.txt word2vec.txt 
+largeoutput/formatted_train.tsv largeoutput/formatted_valid.tsv 
+largeoutput/formatted_test.tsv 1
+
+$ python lr.py largeoutput/formatted_train.tsv 
+largeoutput/formatted_valid.tsv largeoutput/formatted_test.tsv 
+largeoutput/train_out.labels largeoutput/test_out.labels 
+largeoutput/metrics_out.txt 500 0.00001
+\end{lstlisting}
+
+Note that \textbf{the learning rate is different for the large dataset and small dataset} as specified above.
+
+\begin{notebox}
+{\bf Important Note:} You will not be writing out the predictions on validation data, only on train and test data. The validation data is \emph{only} used to give you an estimate of held-out negative log-likelihood at the end of each epoch during training. You are asked to graph the negative log-likelihood vs. epoch of the validation and training data in Programming Empirical Questions section. \footnote{For this assignment, we will always specify the number of epochs. However, a more mature implementation would monitor the performance on validation data at the end of each epoch and stop SGD when this validation log-likelihood appears to have converged. You should \textbf{\emph{not}} implement such a convergence check for this assignment.} 
+\end{notebox}
+
+\subsection{Logistic Regression Review}\label{lrreview}
+
+ Assume you are given a dataset with $N$ training examples and $M$ features. We first write down the $\frac{1}{N}$ times the \emph{negative} conditional log-likelihood of the training data in terms of the design matrix $\Xv$, the labels $\yv$, and the parameter vector $\thetav$. This will be your objective function $J(\thetav)$ for gradient descent. 
+%
+(Recall that $i$-th row of the design matrix $\Xv$ contains the features $\xv^{(i)}$ of the $i$-th training example. The $i$-th entry in the vector $\yv$ is the label $y^{(i)}$ of the $i$-th training example.  Here we assume that each feature vector $\xv^{(i)}$ contains an intercept \emph{feature}, e.g. $x_0^{(i)} = 1 \,\,\forall i \in \{1,\ldots,N\}$. As such, \textbf{the intercept parameter is folded into our parameter vector $\thetav$.}
+
+
+Taking $\xv^{\left(i\right)}$ to be a $(M+1)$-dimensional vector where $x^{(i)}_0=1$, the likelihood $p\left(\yv \mid \mathbf{X},\thetav\right)$ is:
+\begin{align}
+     p(\yv |\mathbf{X},\thetav) &= \prod_{i = 1}^N p(y^{(i)} \mid  \xv^{(i)}, \thetav) = \prod_{i = 1}^N \left(\frac{e^{\thetav^T\xv^{\left(i\right)}}}{1+e^{\thetav^T\xv^{\left(i\right)}}}\right)^{y^{(i)}}\left(\frac{1}{1+e^{\thetav^T\xv^{\left(i\right)}}}\right)^{\left(1-y^{(i)}\right)}\\
+    &= \prod_{i=1}^N \frac{\left(e^{\thetav^T\xv^{\left(i\right)}}\right)^{y^{(i)}}}{1+e^{\thetav^T\xv^{\left(i\right)}}}
+\end{align}
+Hence, $J(\thetav)$, that is $\frac{1}{N}$ times the negative conditional log-likelihood, is:
+\begin{align}
+    J(\thetav)= - \frac{1}{N} \log p\left(\yv \mid \mathbf{X},\thetav\right) &= \frac{1}{N}\sum_{i=1}^N \underbrace{\left[ -y^{(i)}\left(\thetav^T\xv^{\left(i\right)}\right)+\log\left(1+e^{\thetav^T\xv^{\left(i\right)}}\right)\right]}_{J^{(i)}(\thetav)}
+\end{align}
+
+
+The partial derivative of $J(\thetav)$ with respect to $\theta_j \,, j\in\{0,...,M\}$ is:
+\begin{align}
+    \frac{\partial J(\thetav)}{\partial \theta_j} &= \frac{1}{N} \sum_{i=1}^N \underbrace{\left[-x_j^{\left(i\right)}\left(y^{(i)}-\frac{e^{\thetav^T\xv^{\left(i\right)}}}{1+e^{\thetav^T\xv^{\left(i\right)}}}\right)\right]}_{\textstyle\frac{\partial J^{(i)}(\thetav)}{\partial \theta_j}}
+\end{align}
+
+
+The gradient descent update rule  for binary logistic regression for parameter element $\theta_j$ is:
+\begin{align}
+    \theta_j \leftarrow \theta_j - \alpha \frac{\partial J(\thetav)}{\partial \theta_j}
+\end{align}
+
+
+Then, the stochastic gradient descent update for  parameter element $\theta_j$ using the $i$-th datapoint $(\xv^{(i)},y^{(i)})$ is:
+\begin{align}
+    \theta_j \leftarrow \theta_j + \alpha x_j^{\left(i\right)} \left[y^{(i)}-\frac{e^{\thetav^T\xv^{\left(i\right)}}}{1+e^{\thetav^T\xv^{\left(i\right)}}}\right]
+\end{align}
+ 
+
+\subsection{Starter Code}\label{startercode}
+
+To help you start this assignment, we have provided starter code in the handout.
+
+
+
+\subsection{Gradescope Submission }
+You should submit your \texttt{feature.py} and \texttt{lr.py} to Gradescope.
+\textit{Note}: please do not zip them or use other file names. This will cause problems for the autograder to correctly detect and run your code. Gradescope will also provide \textbf{hints for common bugs}; Ctrl-F for HINT if you did not receive a full score.
+
+\end{document}
